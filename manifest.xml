@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<App uuid="37e688a5-30ed-4e6e-9151-10ec5b8de9b">
+	<Name>PDF File</Name>
+	<Author>Incomedia</Author>
+	<Version>3</Version>
+	<Category>Widgets</Category>
+	<Description l10n-id="description">Show an Adobe Acrobat PDF file on a page.</Description>
+	<ShowPreview>True</ShowPreview>
+	<Parameters>
+		<Tab>
+			 <Fields>
+				<Field type="dropdown" id="type">
+					<Options>
+						<Option value="googleviewer" l10n-id="type-googleviewer">Google Viewer</Option>
+						<Option value="iframe" l10n-id="type-iframe">Iframe</Option>
+					</Options>
+					<DefaultValue>googleviewer</DefaultValue>
+					<Label l10n-id="type">Type:</Label>
+					<UpdatesPreview>true</UpdatesPreview>
+				</Field>
+				<Field type="text" id="fileurl">
+					<Extensions>pdf</Extensions>
+					<Label l10n-id="fileurl">File Url:</Label>
+					<UpdatesPreview>true</UpdatesPreview>
+					<DefaultValue>http://</DefaultValue>
+				</Field>
+				<Field type="number" id="height">
+					<DefaultValue>350</DefaultValue>
+					<MinValue>0</MinValue>
+					<MaxValue>1000</MaxValue>
+					<Increment>1</Increment>
+					<Label l10n-id="height">Height:</Label>
+					<UpdatesPreview>true</UpdatesPreview>
+				</Field>
+			</Fields>
+			<ShowPreview>True</ShowPreview>
+		</Tab>
+	</Parameters>
+	<Hooks>
+		function IsEmpty() {
+			return parameters.fileurl.value.length == 0 || parameters.fileurl.value == "http://";
+		}
+	</Hooks>
+   <Output><![CDATA[
+	<?wsx5
+		if (parameters.fileurl.value.length > 0 && parameters.fileurl.value != "http://") {
+			if (parameters.type.value == "googleviewer") {
+				document.write('<iframe src="https://docs.google.com/viewer?embedded=true&amp;url=' + parameters.fileurl.value + '" width="100%" height="' + parameters.height.value + '" style="border:none;"></iframe>');
+			} else {
+				document.write('<iframe src="' + parameters.fileurl.value + '" scrolling="no" frameborder="no" style="border:none; overflow:hidden; width:100%; height: ' + parameters.height.value + 'px" allowTransparency="true"></iframe>');
+			}
+		}
+	?>
+   ]]>
+   </Output>
+</App>
+
